@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://bellcorp-event-app-qij8.onrender.com/api';
 
 export default function EventDetailsPage() {
   const { id } = useParams();

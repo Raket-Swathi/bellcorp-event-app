@@ -1,7 +1,7 @@
-
 // client/src/pages/DashboardPage.js
 import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 const API_BASE = 'https://bellcorp-event-app-qij8.onrender.com/api';
 
@@ -12,9 +12,11 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const token = localStorage.getItem('token');
+  // get token (and user if you want) from context
+  const { token } = useAuth();   // <-- key change
 
   const fetchMyEvents = useCallback(async () => {
+    if (!token) return;
     try {
       setLoading(true);
       setError('');
@@ -34,13 +36,11 @@ const DashboardPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [token]); // dependency added so useEffect is happy
+  }, [token]);
 
   useEffect(() => {
-    if (token) {
-      fetchMyEvents();
-    }
-  }, [fetchMyEvents, token]);
+    fetchMyEvents();
+  }, [fetchMyEvents]);
 
   const handleCancel = async (eventId) => {
     try {
@@ -49,7 +49,6 @@ const DashboardPage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // refresh lists after cancel
       fetchMyEvents();
     } catch (err) {
       console.error(err);
@@ -71,6 +70,7 @@ const DashboardPage = () => {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
+      {/* Upcoming */}
       <section>
         <h2>Upcoming Events</h2>
         {upcomingEvents.length === 0 ? (
@@ -93,6 +93,7 @@ const DashboardPage = () => {
         )}
       </section>
 
+      {/* Past */}
       <section>
         <h2>Past Events</h2>
         {pastEvents.length === 0 ? (
@@ -109,6 +110,7 @@ const DashboardPage = () => {
         )}
       </section>
 
+      {/* Cancelled */}
       <section>
         <h2>Cancelled Events</h2>
         {cancelledEvents.length === 0 ? (

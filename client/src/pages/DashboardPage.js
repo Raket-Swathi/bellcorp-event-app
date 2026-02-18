@@ -6,6 +6,10 @@ import { useAuth } from '../context/AuthContext';
 const API_BASE = 'https://bellcorp-event-app-qij8.onrender.com/api';
 
 const DashboardPage = () => {
+
+   const { token, user } = useAuth();
+  console.log('DASHBOARD AUTH:', { token, user }); 
+
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [pastEvents, setPastEvents] = useState([]);
   const [cancelledEvents, setCancelledEvents] = useState([]);

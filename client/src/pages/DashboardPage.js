@@ -17,8 +17,7 @@ const DashboardPage = () => {
   const [error, setError] = useState('');
 
   // get token (and user if you want) from context
-  const { token } = useAuth();   // <-- key change
-
+    
   const fetchMyEvents = useCallback(async () => {
     if (!token) return;
     try {

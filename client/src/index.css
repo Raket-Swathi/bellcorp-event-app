@@ -1,0 +1,279 @@
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* Layout wrappers */
+.app-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+/* Simple top navbar */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 16px;
+}
+
+.app-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Buttons */
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  background: #14b8a6; /* teal */
+  color: #ffffff;
+  transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 10px rgba(20, 184, 166, 0.35);
+}
+
+.btn.secondary {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #d1d5db;
+  box-shadow: none;
+}
+
+.btn.danger {
+  background: #f97316; /* orange */
+  box-shadow: 0 4px 10px rgba(249, 115, 22, 0.35);
+}
+
+.btn:hover {
+  background: #0d9488;
+  transform: translateY(-1px);
+}
+
+.btn.secondary:hover {
+  background: #f9fafb;
+}
+
+.btn.danger:hover {
+  background: #ea580c;
+}
+
+/* Form styling */
+.form-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 20px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 12px 30px rgba(148, 163, 184, 0.35);
+}
+
+.form-card h2 {
+  margin: 0 0 12px;
+}
+
+.form-group {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.form-input {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #111827;
+  font-size: 14px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 1px rgba(20, 184, 166, 0.4);
+}
+
+/* Event cards grid */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.event-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 25px rgba(148, 163, 184, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.event-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.event-title:hover {
+  color: #0d9488;
+}
+
+.event-meta {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.event-description {
+  font-size: 14px;
+  color: #374151;
+  margin-top: 4px;
+}
+
+.event-footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+/* Filters row */
+.filters-row {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filters-row input {
+  min-width: 160px;
+}
+
+/* Dashboard list cards */
+.section-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 14px;
+  border: 1px solid #e5e7eb;
+  margin-top: 14px;
+}
+
+.section-card h3 {
+  margin-top: 0;
+}
+
+.dashboard-row {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.dashboard-row:last-child {
+  border-bottom: none;
+}
+
+/* Small helper */
+.text-link {
+  color: #0d9488;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
+.small-text {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+  min-width: 32px;
+}
+
+.page-btn.active {
+  background: #14b8a6;
+  color: #ffffff;
+  border-color: #14b8a6;
+}
+
+.page-btn:hover {
+  background: #e5f6f4;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+.event-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 25px rgba(148, 163, 184, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;          /* increased gap */
+  min-height: 220px; /* NEW: ensure a taller card */
+}
+
+.event-description {
+  font-size: 14px;
+  color: #374151;
+  margin-top: 6px;   /* slightly more breathing room */
+  line-height: 1.5;  /* easier to read */
+}
+.event-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* vertical spacing between lines */
+}
+
+.event-line {
+  padding: 2px 0;   /* small padding top/bottom per line */
+}
+

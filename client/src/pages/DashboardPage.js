@@ -6,9 +6,8 @@ import { useAuth } from '../context/AuthContext';
 const API_BASE = 'https://bellcorp-event-app-qij8.onrender.com/api';
 
 const DashboardPage = () => {
-
-   const { token, user } = useAuth();
-  console.log('DASHBOARD AUTH:', { token, user }); 
+  const { token, user } = useAuth();
+  console.log('DASHBOARD AUTH:', { token, user });
 
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [pastEvents, setPastEvents] = useState([]);
@@ -16,18 +15,17 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // get token (and user if you want) from context
-    
   const fetchMyEvents = useCallback(async () => {
-    if (!token) return;
     try {
       setLoading(true);
       setError('');
 
       const res = await axios.get(`${API_BASE}/registrations/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: token
+          ? {
+              Authorization: `Bearer ${token}`,
+            }
+          : {},
       });
 
       setUpcomingEvents(res.data.upcoming || []);
@@ -48,9 +46,11 @@ const DashboardPage = () => {
   const handleCancel = async (eventId) => {
     try {
       await axios.delete(`${API_BASE}/registrations/${eventId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: token
+          ? {
+              Authorization: `Bearer ${token}`,
+            }
+          : {},
       });
       fetchMyEvents();
     } catch (err) {
@@ -58,10 +58,6 @@ const DashboardPage = () => {
       alert(err.response?.data?.message || 'Failed to cancel registration');
     }
   };
-
-  if (!token) {
-    return <p style={{ padding: '1rem' }}>Please log in to see your dashboard.</p>;
-  }
 
   if (loading) {
     return <p style={{ padding: '1rem' }}>Loading your events...</p>;

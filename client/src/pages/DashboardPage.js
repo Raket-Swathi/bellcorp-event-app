@@ -14,10 +14,44 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const fetchMyEvents = async () => {
+  useEffect(() => {
     if (!token) return;
-    setLoading(true);
+
+    const fetchMyEvents = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(`${API_BASE}/registrations/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUpcoming(res.data.upcoming || []);
+        setPast(res.data.past || []);
+        setCancelled(res.data.cancelled || []);
+      } catch (err) {
+        console.error('Fetch my events error', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMyEvents();
+  }, [token]); // no missing dependency now
+
+  if (!user) return <p style={{ padding: 20 }}>Please login.</p>;
+
+  async function handleCancel(eventId) {
+    if (
+      !window.confirm('Are you sure you want to cancel this registration?')
+    ) {
+      return;
+    }
+
     try {
+      await axios.delete(`${API_BASE}/registrations/${eventId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // re-fetch after cancel
+      if (!token) return;
       const res = await axios.get(`${API_BASE}/registrations/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -25,17 +59,13 @@ export default function DashboardPage() {
       setPast(res.data.past || []);
       setCancelled(res.data.cancelled || []);
     } catch (err) {
-      console.error('Fetch my events error', err);
-    } finally {
-      setLoading(false);
+      console.error('Cancel registration error', err);
+      alert(
+        err.response?.data?.message ||
+          'Could not cancel registration. Please try again.'
+      );
     }
-  };
-
-  useEffect(() => {
-    fetchMyEvents();
-  }, [token]); // re-fetch when token changes
-
-  if (!user) return <p style={{ padding: 20 }}>Please login.</p>;
+  }
 
   return (
     <div className="app-page">
@@ -98,24 +128,4 @@ export default function DashboardPage() {
       </div>
     </div>
   );
-
-  async function handleCancel(eventId) {
-    if (
-      !window.confirm('Are you sure you want to cancel this registration?')
-    ) {
-      return;
-    }
-    try {
-      await axios.delete(`${API_BASE}/registrations/${eventId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      await fetchMyEvents();
-    } catch (err) {
-      console.error('Cancel registration error', err);
-      alert(
-        err.response?.data?.message ||
-          'Could not cancel registration. Please try again.'
-      );
-    }
-  }
 }
